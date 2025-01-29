@@ -1,95 +1,61 @@
 <?php
 require_once "constants.php";
-
+require_once "function.php";
 
 $fullPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $scriptPath = $_SERVER['SCRIPT_NAME'];
-$path = str_replace($scriptPath, '', $fullPath);
+$path = substr($fullPath, strlen($scriptPath) + 2);
 
-echo $fullPath;
+
+echo $path;
 
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-
 switch ($method) {
     case 'GET':
-        HandleGET($path);
+        if ($path == '/get/posts') {
+            getPosts();
+        } elseif ($path == '/get/multimedia') {
+            getMultimedia();
+        } else {
+            http_response_code(HTTP_STATUS_NOT_FOUND);
+            echo "Not Found";
+        }
         break;
 
     case 'POST':
-        HandlePOST($path);
+        if ($path == '/post/create') {
+            createPost();
+        } elseif ($path == '/post/multimedia') {
+            createMultimedia();
+        } else {
+            http_response_code(HTTP_STATUS_NOT_FOUND);
+            echo "Not Found";
+        }
         break;
 
     case 'PUT':
-        HandlePUT($path);
+        if ($path == '/posts') {
+            updatePost();
+        } else {
+            http_response_code(HTTP_STATUS_NOT_FOUND);
+            echo "Not Found";
+        }
         break;
 
     case 'DELETE':
-        HandleDELETE($path);
+        if ($path == '/posts') {
+            deletePost();
+        } elseif ($path == '/multimedia') {
+            deleteMultimedia();
+        } else {
+            http_response_code(HTTP_STATUS_NOT_FOUND);
+            echo "Not Found";
+        }
         break;
 
     default:
-        http_response_code(HTTP_STATUS_IM_A_TEAPOT);
+        http_response_code(HTTP_STATUS_IM_A_TEAPOT); // HTTP_STATUS_IM_A_TEAPOT
         break;
-}
-
-function HandlePOST($path)
-{
-    switch ($path) {
-        case '/media/create/':
-            createMultimedia();
-            break;
-        case '/post/create/':
-            createPost();
-            break;
-        default:
-            echo json_encode(["error" => "Method not allowed"]);
-            break;
-    }
-}
-function HandleGET($path)
-{
-    switch ($path) {
-        case '/posts/':
-            getPosts();
-            break;
-        case '/media/':
-            getMultimedia();
-            break;
-        default:
-            http_response_code(HTTP_STATUS_NOT_FOUND);
-            echo 'Not Found';
-            break;
-    }
-}
-
-function HandlePUT($path)
-{
-    switch ($path) {
-        case '/post/update/':
-            updatePost();
-            break;
-        default:
-            http_response_code(HTTP_STATUS_NOT_FOUND);
-            echo 'Not Found';
-            break;
-    }
-}
-
-function HandleDELETE($path)
-{
-    switch ($path) {
-        case '/posts/delete/':
-            deletePost();
-            break;
-
-        case "/media/delete/": 
-            deleteMultimedia();
-            break;
-        default:
-            http_response_code(HTTP_STATUS_NOT_FOUND);
-            echo 'Not Found';
-            break;
-    }
 }

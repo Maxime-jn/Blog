@@ -11,7 +11,7 @@ document.getElementById('ajouterPostForm').addEventListener('submit', function (
         formData.append('fichier[]', files[i]);
     }
 
-    fetch('../php/dispach.php/post/create/', {
+    fetch('/2024-2025/AtWeb/Mercredi/2eme%20Semestre/Blog/php/dispach.php/post/create/', {
         method: 'POST',
         body: formData,
         headers: {
