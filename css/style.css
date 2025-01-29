@@ -1,0 +1,270 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+header {
+    background-color: #1a1a1a;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+header nav  {
+    display: flex;
+    justify-content: space-between;
+
+
+}
+header h1 a {
+    color: #fff;
+    text-decoration: none;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+header nav a:hover {
+    background-color: #444;
+}
+
+.formAjoutInfo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2%;
+}
+
+.formConnectionInfo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2%;
+}
+
+main {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 1rem;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container input,
+.form-container textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-container input:focus,
+.form-container textarea:focus {
+    outline: none;
+    border-color: #007BFF;
+}
+
+.form-container .submit {
+    width: 100%;
+    padding: 1rem;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-container .submit:hover {
+    background-color: #0056b3;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s;
+    padding: 1rem;
+    width: calc(100% - 2rem);
+    max-width: 300px;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card img {
+    max-width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    color: #333;
+}
+
+.card a {
+    color: #000000;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 10px 15px;
+    background: var(--bg);
+    transition: 0.2s;
+    transform: scale(1);
+    text-decoration: none;
+}
+
+.card a:hover {
+    color: var(--hover-text);
+    transform: scale(1.05);
+    background: rgba(89, 0, 255, 0.308);
+    box-shadow: 3px 2px 0px rgb(0, 0, 0);
+}
+
+footer {
+    background-color: #1a1a1a;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+footer p {
+    margin: 0;
+}
+
+.buttonForm {
+    color: #000000;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 10px 15px;
+    background: var(--bg);
+    transition: 0.2s;
+    transform: scale(1);
+}
+
+.buttonForm:hover {
+    color: var(--hover-text);
+    transform: scale(1.05);
+    background: rgba(89, 0, 255, 0.308);
+    box-shadow: 3px 2px 0px rgb(0, 0, 0);
+}
+
+.buttonForm:active {
+    transform: scale(1.05);
+    box-shadow: none;
+}
+
+.formGlobal {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 100%;
+    }
+
+    header nav a {
+        margin: 0.5rem;
+    }
+}
+
+/* CSS spécifique à la page Détail du Post */
+article {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 100%;
+}
+
+article h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+article p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: #555;
+}
+
+#multimedia-section {
+    margin-top: 2rem;
+}
+
+#multimedia-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+#multimedia-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+#multimedia-content img,
+#multimedia-content video,
+#multimedia-content audio {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 1rem;
+    }
+
+    article {
+        padding: 1rem;
+    }
+
+    #multimedia-content {
+        flex-direction: column;
+    }
+}

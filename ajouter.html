@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un Post</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Fil d'actualité</a>
+            <a href="ajouter.html">Ajouter</a>
+            <a href="connection.html">Connection</a>
+        </nav>
+    </header>
+    <main>
+        <form action="" id="ajouterPostForm" enctype="multipart/form-data" method="post">
+            <h1>Ajouter un Nouveau Post</h1>
+
+            <div class="formAjoutInfo">
+                <label for="titre">Titre:</label>
+                <input type="text" id="titre" name="titre" required>
+            </div>
+            <div class="formAjoutInfo">
+                <label for="commentaire">Commentaire:</label>
+                <textarea id="commentaire" name="commentaire" required></textarea>
+            </div>
+            <div class="formAjoutInfo">
+                <label for="fichier">Fichier Multimédia:</label>
+                <input type="file" id="fichier" name="fichier[]" accept="image/png, image/jpeg, video/mp4, audio/mp3, audio/wav" required multiple>
+            </div>
+            <button type="submit" class="buttonForm">Ajouter</button>
+        </form>
+        <script src="js/main.js"></script>
+    </main>
+    <footer>
+        <p>Maxime Jean / Timoleon Hede &copy;2025</p>
+    </footer>
+</body>
+
+</html>
