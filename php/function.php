@@ -41,7 +41,18 @@ function createPost()
 
     if (isset($_FILES['fichier'])) {
         foreach ($_FILES['fichier']['tmp_name'] as $key => $tmp_name) {
-            $filePath = 'uploads/' . basename($_FILES['fichier']['name'][$key]);
+            $fileType = mime_content_type($tmp_name);
+            
+            if (strpos($fileType, 'image') !== false) {
+                $filePath = "../multimedia/image/" . basename($_FILES['fichier']['name'][$key]);
+            } elseif (strpos($fileType, 'video') !== false) {
+                $filePath = "../multimedia/video/" . basename($_FILES['fichier']['name'][$key]);
+            } elseif (strpos($fileType, 'sound') !== false) {
+                $filePath = "../multimedia/sound/" . basename($_FILES['fichier']['name'][$key]);
+            } else {
+                echo json_encode(["error" => "Unsupported file type"]);
+                return;
+            }
             move_uploaded_file($tmp_name, $filePath);
 
             $sql = "INSERT INTO multimedia (path_ficher, nom, idPosts) VALUES (:path, :nom, :idPosts)";
@@ -151,3 +162,11 @@ function getUserByName()
     $statement = dbRun($sql, $param);
     return $statement->fetch();
 }
+
+
+
+
+
+
+
+

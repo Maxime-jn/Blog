@@ -4,7 +4,7 @@ require_once "function.php";
 
 $fullPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $scriptPath = $_SERVER['SCRIPT_NAME'];
-$path = substr($fullPath, strlen($scriptPath) + 2);
+$path = substr($fullPath, strlen($scriptPath));
 
 
 echo $path;
@@ -16,6 +16,7 @@ switch ($method) {
     case 'GET':
         if ($path == '/get/posts') {
             getPosts();
+
         } elseif ($path == '/get/multimedia') {
             getMultimedia();
         } else {
@@ -27,6 +28,8 @@ switch ($method) {
     case 'POST':
         if ($path == '/post/create') {
             createPost();
+            header("Location: http://localhost/2024-2025/AtWeb/Mercredi/2emeSemestre/Blog/index.html");
+            die();
         } elseif ($path == '/post/multimedia') {
             createMultimedia();
         } else {
@@ -56,6 +59,8 @@ switch ($method) {
         break;
 
     default:
-        http_response_code(HTTP_STATUS_IM_A_TEAPOT); // HTTP_STATUS_IM_A_TEAPOT
+        http_response_code(HTTP_STATUS_IM_A_TEAPOT); 
         break;
 }
+
+
