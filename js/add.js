@@ -13,7 +13,7 @@ document.getElementById('ajouterPostForm').addEventListener('submit', function (
         formData.append('fichier[]', files[i]);
     }
 
-    fetch('/2024-2025/AtWeb/Mercredi/2emeSemestre/Blog/php/dispach.php/post/create', {
+    fetch('http://localhost/2024-2025/AtWeb/Mercredi/2emeSemestre/Blog/php/dispach.php/post/create', {
         method: 'POST',
         body: formData,
         headers: {

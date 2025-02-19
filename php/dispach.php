@@ -7,15 +7,12 @@ $scriptPath = $_SERVER['SCRIPT_NAME'];
 $path = substr($fullPath, strlen($scriptPath));
 
 
-echo $path;
-
-
 $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
     case 'GET':
         if ($path == '/get/posts') {
-            getPosts();
+            echo (getPosts());
 
         } elseif ($path == '/get/multimedia') {
             getMultimedia();
@@ -59,7 +56,7 @@ switch ($method) {
         break;
 
     default:
-        http_response_code(HTTP_STATUS_IM_A_TEAPOT); 
+        http_response_code(HTTP_STATUS_IM_A_TEAPOT);
         break;
 }
 

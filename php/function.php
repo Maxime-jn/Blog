@@ -21,11 +21,35 @@ function getRequestData()
 
 function getPosts()
 {
-    $sql = "SELECT * FROM posts ORDER BY idPosts DESC";
+    $sql = "SELECT Titre,commentaire, multimedia.path_ficher, posts.iduser, posts.idPosts
+            FROM posts, multimedia, user
+            WHERE posts.idPosts = multimedia.idPosts 
+            AND user.iduser = posts.iduser
+            ORDER BY idPosts DESC";
 
     $statement = dbrun($sql);
-    return $statement->fetchAll();
+    $datas = $statement->fetchAll();
+    return json_encode($datas);
 }
+
+function getPostById()
+{
+    $id = isset($_GET['id']) ? $_GET['id'] : null;
+    if (!$id) {
+        echo json_encode(["error" => "Post ID required"]);
+        return;
+    }
+    $sql = "SELECT Titre,commentaire, multimedia.path_ficher, posts.iduser, posts.idPosts
+        FROM posts, multimedia, user
+        WHERE posts.idPosts = multimedia.idPosts 
+        AND user.iduser = posts.iduser
+        AND posts.idPosts = :id ";
+    $param = [':id' => $id];
+
+    $statement = dbRun($sql, $param);
+    return $statement->fetch();
+}
+
 
 function createPost()
 {
@@ -42,7 +66,7 @@ function createPost()
     if (isset($_FILES['fichier'])) {
         foreach ($_FILES['fichier']['tmp_name'] as $key => $tmp_name) {
             $fileType = mime_content_type($tmp_name);
-            
+
             if (strpos($fileType, 'image') !== false) {
                 $filePath = "../multimedia/image/" . basename($_FILES['fichier']['name'][$key]);
             } elseif (strpos($fileType, 'video') !== false) {
