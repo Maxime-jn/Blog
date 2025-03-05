@@ -3,9 +3,17 @@
 document.getElementById('ajouterPostForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
+    const titre = document.getElementById('titre').value;
+    const commentaire = document.getElementById('commentaire').value;
+
+    if (!titre || !commentaire) {
+        alert('Veuillez remplir tous les champs.');
+        return;
+    }
+
     const formData = new FormData();
-    formData.append('Titre', document.getElementById('titre').value);
-    formData.append('commentaire', document.getElementById('commentaire').value);
+    formData.append('Titre', titre);
+    formData.append('commentaire', commentaire);
     formData.append('iduser', 1);
 
     const files = document.getElementById('fichier').files;
@@ -20,10 +28,19 @@ document.getElementById('ajouterPostForm').addEventListener('submit', function (
             'Authorization': 'Bearer votre-token'
         }
     })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             console.log(data);
             alert('Post ajouté avec succès!');
         })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Une erreur est survenue lors de l\'ajout du post.');
+        });
 
 });

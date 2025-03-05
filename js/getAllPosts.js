@@ -2,7 +2,7 @@
 
 window.onload = async () => {
     try {
-        const response = await fetch('http://localhost/2024-2025/AtWeb/Mercredi/2emeSemestre/Blog/php/dispach.php/get/posts', {
+        const response = await fetch('php/dispach.php/get/posts', {
             headers: { 'Authorization': 'Bearer votre-token' }
         });
 
@@ -24,3 +24,46 @@ window.onload = async () => {
         console.error('Error fetching posts:', error);
     }
 };
+
+
+// fetch('getPosts.php')
+//     .then(response => response.json())
+//     .then(posts => {
+//         let postsContainer = document.getElementById('posts');
+//         posts.forEach(post => {
+//             let postElement = document.createElement('div');
+//             postElement.classList.add('post');
+//             postElement.innerHTML = `
+//                 <h2>${post.title}</h2>
+//                 <p>${post.content}</p>
+//                 <button onclick="deletePost(${post.id})">Supprimer</button>
+//             `;
+//             postsContainer.appendChild(postElement);
+//         });
+//     })
+//     .catch(error => console.error('Error:', error));
+
+// function deletePost(postId) {
+//     let token = localStorage.getItem('auth_token');
+//     if (!token) {
+//         alert('Vous devez être connecté pour supprimer un post.');
+//         return;
+//     }
+
+//     fetch(`deletePost.php?id=${postId}`, {
+//         method: 'DELETE',
+//         headers: {
+//             'Authorization': `Bearer ${token}`
+//         }
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         if (data.success) {
+//             alert('Post supprimé.');
+//             location.reload();
+//         } else {
+//             alert('Vous ne pouvez pas supprimer ce post.');
+//         }
+//     })
+//     .catch(error => console.error('Error:', error));
+// }

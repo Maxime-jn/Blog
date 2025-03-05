@@ -13,7 +13,8 @@ switch ($method) {
     case 'GET':
         if ($path == '/get/posts') {
             echo (getPosts());
-
+        } elseif ($path == '/get/post') {
+            echo (getPostById());
         } elseif ($path == '/get/multimedia') {
             getMultimedia();
         } else {

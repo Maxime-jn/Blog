@@ -47,48 +47,57 @@ function getPostById()
     $param = [':id' => $id];
 
     $statement = dbRun($sql, $param);
-    return $statement->fetch();
+    $data = $statement->fetch();
+    return json_encode($data);
 }
 
 
 function createPost()
 {
     $data = getRequestData();
-    $sql = "INSERT INTO posts (Titre, commentaire, iduser) VALUES (:Titre, :commentaire, :iduser)";
-    $param = [
-        ':Titre' => $data['Titre'],
-        ':commentaire' => $data['commentaire'],
-        ':iduser' => $data['iduser']
-    ];
-    dbRun($sql, $param);
-    $postId = lastInsertId();
+    beginTransaction();
+    try {
+        $sql = "INSERT INTO posts (Titre, commentaire, iduser) VALUES (:Titre, :commentaire, :iduser)";
+        $param = [
+            ':Titre' => $data['Titre'],
+            ':commentaire' => $data['commentaire'],
+            ':iduser' => $data['iduser']
+        ];
+        dbRun($sql, $param);
+        $postId = lastInsertId();
 
-    if (isset($_FILES['fichier'])) {
-        foreach ($_FILES['fichier']['tmp_name'] as $key => $tmp_name) {
-            $fileType = mime_content_type($tmp_name);
+        if (isset($_FILES['fichier'])) {
+            foreach ($_FILES['fichier']['tmp_name'] as $key => $tmp_name) {
+                $fileType = mime_content_type($tmp_name);
 
-            if (strpos($fileType, 'image') !== false) {
-                $filePath = "../multimedia/image/" . basename($_FILES['fichier']['name'][$key]);
-            } elseif (strpos($fileType, 'video') !== false) {
-                $filePath = "../multimedia/video/" . basename($_FILES['fichier']['name'][$key]);
-            } elseif (strpos($fileType, 'sound') !== false) {
-                $filePath = "../multimedia/sound/" . basename($_FILES['fichier']['name'][$key]);
-            } else {
-                echo json_encode(["error" => "Unsupported file type"]);
-                return;
+                if (strpos($fileType, 'image') !== false) {
+                    $filePath = "../multimedia/image/" . basename($_FILES['fichier']['name'][$key]);
+                } elseif (strpos($fileType, 'video') !== false) {
+                    $filePath = "../multimedia/video/" . basename($_FILES['fichier']['name'][$key]);
+                } elseif (strpos($fileType, 'sound') !== false) {
+                    $filePath = "../multimedia/sound/" . basename($_FILES['fichier']['name'][$key]);
+                } else {
+                    throw new Exception("Unsupported file type");
+                }
+                move_uploaded_file($tmp_name, $filePath);
+
+                $sql = "INSERT INTO multimedia (path_ficher, nom, idPosts) VALUES (:path, :nom, :idPosts)";
+                $param = [
+                    ':path' => $filePath,
+                    ':nom' => $_FILES['fichier']['name'][$key],
+                    ':idPosts' => $postId
+                ];
+                dbRun($sql, $param);
             }
-            move_uploaded_file($tmp_name, $filePath);
-
-            $sql = "INSERT INTO multimedia (path_ficher, nom, idPosts) VALUES (:path, :nom, :idPosts)";
-            $param = [
-                ':path' => $filePath,
-                ':nom' => $_FILES['fichier']['name'][$key],
-                ':idPosts' => $postId
-            ];
-            dbRun($sql, $param);
         }
+        commit();
+    } catch (Exception $e) {
+        rollBack();
+        echo json_encode(["error" => $e->getMessage()]);
     }
 }
+
+
 
 function updatePost()
 {
