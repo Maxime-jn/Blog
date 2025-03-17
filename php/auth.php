@@ -1,6 +1,6 @@
 <?php
-session_start();
-require_once "database.php";
+
+require_once "database.php"; 
 
 function loginUser($name, $password)
 {
@@ -10,24 +10,36 @@ function loginUser($name, $password)
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['iduser'];
-        $_SESSION['token'] = $user['token'];
-        return ["success" => true, "token" => $user['token'], "message" => "Connexion réussie"];
+        // Génération du token
+        $token = bin2hex(random_bytes(32));
+        $tokenExpiration = time() + 3600; // Expiration dans 1 heure
+
+        // Mise à jour du token
+        $updateSql = "UPDATE user SET token = :token, token_expiration = :expiration WHERE iduser = :iduser";
+        $updateParam = [
+            ':token' => $token,
+            ':expiration' => $tokenExpiration,
+            ':iduser' => $user['iduser']
+        ];
+        dbRun($updateSql, $updateParam);
+
+        return ["success" => true, "token" => $token, "message" => "Connexion réussie"];
     }
+
     return ["success" => false, "message" => "Nom ou mot de passe incorrect"];
 }
 
-function checkAuth()
+function checkAuth($token)
 {
-    if (!isset($_SESSION['user_id']) || !isset($_SESSION['token'])) {
-        return false;
-    }
-    $sql = "SELECT * FROM user WHERE iduser = :id AND token = :token";
-    $params = [
-        ':id' => $_SESSION['user_id'],
-        ':token' => $_SESSION['token']
-    ];
+    $sql = "SELECT * FROM user WHERE token = :token";
+    $params = [':token' => $token];
     $stmt = dbRun($sql, $params);
-    return $stmt->fetch() !== false;
+    $user = $stmt->fetch();
+
+    if ($user && $user['token_expiration'] > time()) {
+        return $user;
+    }
+
+    return false;
 }
 ?>

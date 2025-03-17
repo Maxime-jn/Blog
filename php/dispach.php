@@ -2,6 +2,8 @@
 require_once "constants.php";
 require_once "function.php";
 
+session_start();
+
 $fullPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $scriptPath = $_SERVER['SCRIPT_NAME'];
 $path = substr($fullPath, strlen($scriptPath));
@@ -14,7 +16,7 @@ switch ($method) {
         if ($path == '/get/posts') {
             echo (getPosts());
         } elseif ($path == '/get/post') {
-            echo (getPostById());
+            getPostById();
         } elseif ($path == '/get/multimedia') {
             getMultimedia();
         } else {

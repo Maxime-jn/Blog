@@ -1,22 +1,20 @@
 <?php
-session_start(); // Démarre la session
 
-// Vérifier si un utilisateur est connecté
-if (isset($_SESSION['token'])) {
-    // Effacer le token de la base de données
-    require_once "database.php";
-    $sql = "UPDATE user SET token = NULL WHERE token = :token";
-    $param = [':token' => $_SESSION['token']];
-    dbRun($sql, $param);
+require_once "database.php"; 
 
-    // Détruire la session
-    session_unset();
-    session_destroy();
-
-    // Rediriger vers la page de connexion
-    header("Location: connexion.html");
+// Récupérer le token depuis l'en-tête Authorization
+$headers = getallheaders();
+if (!isset($headers['Authorization'])) {
+    echo json_encode(["error" => "Token manquant."]);
     exit();
-} else {
-    echo "Vous n'êtes pas connecté.";
 }
+
+$token = str_replace('Bearer ', '', $headers['Authorization']);
+
+// Supprimer le token de la base de données
+$sql = "UPDATE user SET token = NULL, token_expiration = NULL WHERE token = :token";
+$param = [':token' => $token];
+dbRun($sql, $param);
+
+echo json_encode(["success" => true, "message" => "Déconnexion réussie."]);
 ?>

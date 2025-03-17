@@ -39,16 +39,30 @@ function getPostById()
         echo json_encode(["error" => "Post ID required"]);
         return;
     }
-    $sql = "SELECT Titre,commentaire, multimedia.path_ficher, posts.iduser, posts.idPosts
-        FROM posts, multimedia, user
-        WHERE posts.idPosts = multimedia.idPosts 
-        AND user.iduser = posts.iduser
-        AND posts.idPosts = :id ";
-    $param = [':id' => $id];
 
+    $sql = "SELECT Titre, commentaire, iduser FROM posts WHERE idPosts = :id";
+    $param = [':id' => $id];
     $statement = dbRun($sql, $param);
-    $data = $statement->fetch();
-    return json_encode($data);
+    $post = $statement->fetch();
+
+    if (!$post) {
+        echo json_encode(["error" => "Post not found"]);
+        return;
+    }
+
+    $sql = "SELECT path_ficher, 
+                   CASE 
+                       WHEN path_ficher LIKE '%.jpg' OR path_ficher LIKE '%.png' THEN 'image'
+                       WHEN path_ficher LIKE '%.mp4' THEN 'video'
+                       WHEN path_ficher LIKE '%.mp3' OR path_ficher LIKE '%.wav' THEN 'audio'
+                       ELSE 'unknown'
+                   END AS type
+            FROM multimedia WHERE idPosts = :id";
+    $statement = dbRun($sql, $param);
+    $multimedia = $statement->fetchAll();
+
+    $post['multimedia'] = $multimedia;
+    echo json_encode($post);
 }
 
 
@@ -71,11 +85,11 @@ function createPost()
                 $fileType = mime_content_type($tmp_name);
 
                 if (strpos($fileType, 'image') !== false) {
-                    $filePath = "../multimedia/image/" . basename($_FILES['fichier']['name'][$key]);
+                    $filePath = "./multimedia/image/" . basename($_FILES['fichier']['name'][$key]);
                 } elseif (strpos($fileType, 'video') !== false) {
-                    $filePath = "../multimedia/video/" . basename($_FILES['fichier']['name'][$key]);
+                    $filePath = "./multimedia/video/" . basename($_FILES['fichier']['name'][$key]);
                 } elseif (strpos($fileType, 'sound') !== false) {
-                    $filePath = "../multimedia/sound/" . basename($_FILES['fichier']['name'][$key]);
+                    $filePath = "./multimedia/sound/" . basename($_FILES['fichier']['name'][$key]);
                 } else {
                     throw new Exception("Unsupported file type");
                 }

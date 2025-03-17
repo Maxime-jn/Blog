@@ -7,21 +7,21 @@
     <title>Accueil</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-
+<script src="js/connect.js"></script>
 <body>
     <header>
         <nav>
             <a href="index.html">Fil d'actualité</a>
             <a href="ajouter.html">Ajouter</a>
-            <a href="connexion.html">Connexion</a>
+            <span id="authButton"></span>
         </nav>
     </header>
 
-    <main id="mainCard">
+    <main id="mainCard" class="mainCard">
         <div id="posts"></div> <!-- Posts are dynamically loaded here -->
         <script src="js/getAllPosts.js"></script>
     </main>
-
+    <script src="js/connect.js"></script>
     <footer>
         <p>Maxime Jean / Timoleon Hede &copy;2025</p>
     </footer>

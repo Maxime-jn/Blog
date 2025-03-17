@@ -25,7 +25,7 @@ document.getElementById('ajouterPostForm').addEventListener('submit', function (
         method: 'POST',
         body: formData,
         headers: {
-            'Authorization': 'Bearer votre-token'
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
     })
         .then(response => {

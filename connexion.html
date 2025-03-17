@@ -13,11 +13,11 @@
         <nav>
             <a href="index.html">Fil d'actualité</a>
             <a href="ajouter.html">Ajouter</a>
-            <a href="connexion.html">Connexion</a>
+            <span id="authButton"></span>
         </nav>
     </header>
-    <main>
-        <form action="php/login.php" method="POST">
+    <main class="mainConnexion">
+        <form action="php/login.php" method="POST" id="loginForm">
             <label for="username">Nom d'utilisateur :</label>
             <input type="text" id="username" name="username" required><br><br>
 
@@ -27,6 +27,7 @@
             <input type="submit" value="Se connecter">
         </form>
     </main>
+    <script src="js/connect.js"></script>
     <footer>
         <p>Maxime Jean / Timoleon Hede &copy;2025</p>
     </footer>
