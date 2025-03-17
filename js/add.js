@@ -17,7 +17,7 @@ document.getElementById('ajouterPostForm').addEventListener('submit', function (
         return;
     }
 
-    fetch('./php/check_token.php', {
+    fetch('./php/dispach.php/check/token', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -8,7 +8,6 @@ $fullPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $scriptPath = $_SERVER['SCRIPT_NAME'];
 $path = substr($fullPath, strlen($scriptPath));
 
-
 $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
@@ -25,52 +24,19 @@ switch ($method) {
         }
         break;
 
-    // case 'POST':
-    //     if ($path == '/post/create') {
-    //         createPost();
-    //         die();
-    //     } elseif ($path == '/post/multimedia') {
-    //         createMultimedia();
-    //     } else {
-    //         http_response_code(HTTP_STATUS_NOT_FOUND);
-    //         echo "Not Found";
-    //     }
-    //     break;
-
     case 'POST':
         if ($path == '/post/create') {
             createPost();
             die();
         } elseif ($path == '/post/multimedia') {
             createMultimedia();
-        } elseif ($path == '/check/token') { // <-- Ajout du chemin pour vérifier le token
+        } elseif ($path == '/check/token') {
             checkToken();
         } else {
             http_response_code(HTTP_STATUS_NOT_FOUND);
             echo "Not Found";
         }
         break;
-
-
-    // case 'PUT':
-    //     if ($path == '/posts') {
-    //         updatePost();
-    //     } else {
-    //         http_response_code(HTTP_STATUS_NOT_FOUND);
-    //         echo "Not Found";
-    //     }
-    //     break;
-
-    // case 'DELETE':
-    //     if ($path == '/posts') {
-    //         deletePost();
-    //     } elseif ($path == '/multimedia') {
-    //         deleteMultimedia();
-    //     } else {
-    //         http_response_code(HTTP_STATUS_NOT_FOUND);
-    //         echo "Not Found";
-    //     }
-    //     break;
 
     case 'PUT':
         if ($path == '/posts') {
@@ -80,7 +46,7 @@ switch ($method) {
             echo "Not Found";
         }
         break;
-    
+
     case 'DELETE':
         if ($path == '/posts') {
             deletePost();
@@ -91,10 +57,8 @@ switch ($method) {
             echo "Not Found";
         }
         break;
-    
+
     default:
         http_response_code(HTTP_STATUS_IM_A_TEAPOT);
         break;
 }
-
-

@@ -7,10 +7,22 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 require_once "database.php";
 require_once "constants.php";
 
+// function getRequestData()
+// {
+//     $data = [];
+//     if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT') {
+//         $data = $_POST;
+//         if (empty($data)) {
+//             $data = json_decode(file_get_contents("php://input"), true);
+//         }
+//     }
+//     return $data;
+// }
+
 function getRequestData()
 {
     $data = [];
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'PUT' || $_SERVER['REQUEST_METHOD'] === 'DELETE') {
         $data = $_POST;
         if (empty($data)) {
             $data = json_decode(file_get_contents("php://input"), true);
@@ -18,6 +30,7 @@ function getRequestData()
     }
     return $data;
 }
+
 
 // function getPosts()
 // {
@@ -236,6 +249,14 @@ function checkToken()
     }
 }
 
+function getUserByToken($token)
+{
+    $sql = "SELECT iduser FROM user WHERE token = :token";
+    $param = [':token' => $token];
+    $stmt = dbRun($sql, $param);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 
 // function deletePost()
 // {
@@ -309,6 +330,7 @@ function checkToken()
 function updatePost()
 {
     $data = getRequestData();
+    error_log("updatePost() - Données reçues: " . print_r($data, true));  // Debug
     $id = $data['idPosts'];
     if (!$id) {
         echo json_encode(["error" => "Post ID required"]);

@@ -1,34 +1,14 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const postId = urlParams.get("id");
-    const token = localStorage.getItem("token");
+document.getElementById("editPostForm").addEventListener("submit", async(e) => {
+    e.preventDefault();
 
-    if (!postId || !token) {
-        alert("Accès refusé.");
-        window.location.href = "index.html";
-        return;
-    }
+    const updatedPost = {
+        idPosts: postId,
+        Titre: document.getElementById("titre").value,
+        commentaire: document.getElementById("commentaire").value
+    };
+    console.log("Données envoyées pour la mise à jour :", updatedPost);
 
-    // Récupérer les infos du post
-    const response = await fetch(`./php/dispach.php/get/post?id=${postId}`, {
-        headers: { "Authorization": `Bearer ${token}` }
-    });
-
-    const post = await response.json();
-    document.getElementById("postId").value = post.idPosts;
-    document.getElementById("titre").value = post.Titre;
-    document.getElementById("commentaire").value = post.commentaire;
-
-    // Gérer la soumission du formulaire
-    document.getElementById("editPostForm").addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const updatedPost = {
-            idPosts: postId,
-            Titre: document.getElementById("titre").value,
-            commentaire: document.getElementById("commentaire").value
-        };
-
+    try {
         const updateResponse = await fetch("./php/dispach.php/posts", {
             method: "PUT",
             headers: {
@@ -39,11 +19,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         const result = await updateResponse.json();
+        console.log("Réponse du serveur :", result);
+
         if (result.error) {
             alert("Erreur: " + result.error);
         } else {
             alert("Post modifié avec succès !");
             window.location.href = "index.html";
         }
-    });
+    } catch (error) {
+        console.error("Erreur lors de la mise à jour du post:", error);
+        alert("Erreur lors de la mise à jour du post.");
+    }
 });

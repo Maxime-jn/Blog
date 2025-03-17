@@ -18,7 +18,7 @@ $stmt = dbRun($sql, $param);
 $user = $stmt->fetch();
 
 if ($user) {
-    echo json_encode(["success" => true, "message" => "Accès autorisé", "user" => $user['name']]);
+    echo json_encode(["success" => true, "message" => "Accès autorisé", "user" => $user['iduser']]);
 } else {
     echo json_encode(["error" => "Token invalide."]);
 }
