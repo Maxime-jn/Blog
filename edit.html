@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un post</title>
+    <script defer src="edit_post.js"></script>
+</head>
+<body>
+    <h1>Modifier un post</h1>
+    <form id="editPostForm">
+        <input type="hidden" id="postId">
+        <label for="titre">Titre :</label>
+        <input type="text" id="titre" required>
+        <label for="commentaire">Commentaire :</label>
+        <textarea id="commentaire" required></textarea>
+        <button type="submit">Modifier</button>
+    </form>
+</body>
+</html>

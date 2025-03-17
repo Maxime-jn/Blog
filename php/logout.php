@@ -12,7 +12,7 @@ if (!isset($headers['Authorization'])) {
 $token = str_replace('Bearer ', '', $headers['Authorization']);
 
 // Supprimer le token de la base de données
-$sql = "UPDATE user SET token = NULL, token_expiration = NULL WHERE token = :token";
+$sql = "UPDATE user SET token = NULL WHERE token = :token";
 $param = [':token' => $token];
 dbRun($sql, $param);
 

@@ -4,7 +4,7 @@ window.onload = async () => {
     console.log("load");
 
     try {
-        const response = await fetch('http://localhost/2024-2025/AtWeb/Mercredi/2emeSemestre/Blog/php/dispach.php/get/posts', {
+        const response = await fetch('./php/dispach.php/get/posts', {
             headers: { 'Authorization': 'Bearer votre-token' }
         });
 

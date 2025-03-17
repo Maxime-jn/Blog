@@ -8,9 +8,19 @@ body {
     flex-direction: column;
     min-height: 100vh;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+#mainDetail {
+    height: 80vh;
+    display: flex;
 }
 
 header {
+
     background-color: #1a1a1a;
     padding-top: 2%;
     padding-bottom: 2%;
@@ -263,17 +273,25 @@ article p {
     font-size: 1.5rem;
     margin-bottom: 1rem;
     color: #333;
+
 }
 
 #multimedia-content {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1rem;   
+}
+
+multimedia-content audio{
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #multimedia-content img,
-#multimedia-content video,
-#multimedia-content audio {
+multimedia-content {
     max-width: 100%;
     height: auto;
     border: 1px solid #ddd;

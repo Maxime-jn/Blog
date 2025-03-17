@@ -10,7 +10,7 @@ window.onload = async () => {
     }
 
     try {
-        const response = await fetch(`http://localhost/2024-2025/AtWeb/Mercredi/2emeSemestre/Blog/php/dispach.php/get/post?id=${postId}`, {
+        const response = await fetch(`./php/dispach.php/get/post?id=${postId}`, {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         });
 

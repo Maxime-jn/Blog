@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Fil d'actualité</a>
+            <a href="ajouter.html">Ajouter</a>
+            <span id="authButton"></span>
+        </nav>
+    </header>
+    
+    <main class="mainInscription">
+        <form id="registerForm">
+            <h1>Créer un compte</h1>
+
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirmPassword">Confirmer le mot de passe :</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+            <input type="submit" value="S'inscrire">
+        </form>
+    </main>
+
+    <script src="js/register.js"></script>
+    <footer>
+        <p>Maxime Jean / Timoleon Hede &copy;2025</p>
+    </footer>
+</body>
+</html>

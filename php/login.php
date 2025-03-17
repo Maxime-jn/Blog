@@ -25,10 +25,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $tokenExpiration = time() + 3600; // Expiration dans 1 heure
 
         // Mise à jour du token dans la base de données
-        $updateSql = "UPDATE user SET token = :token, token_expiration = :expiration WHERE iduser = :iduser";
+        $updateSql = "UPDATE user SET token = :token WHERE iduser = :iduser";
         $updateParam = [
             ':token' => $token,
-            ':expiration' => $tokenExpiration,
             ':iduser' => $user['iduser']
         ];
         dbRun($updateSql, $updateParam);

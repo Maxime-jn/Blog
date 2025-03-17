@@ -25,18 +25,52 @@ switch ($method) {
         }
         break;
 
+    // case 'POST':
+    //     if ($path == '/post/create') {
+    //         createPost();
+    //         die();
+    //     } elseif ($path == '/post/multimedia') {
+    //         createMultimedia();
+    //     } else {
+    //         http_response_code(HTTP_STATUS_NOT_FOUND);
+    //         echo "Not Found";
+    //     }
+    //     break;
+
     case 'POST':
         if ($path == '/post/create') {
             createPost();
-            header("Location: http://localhost/2024-2025/AtWeb/Mercredi/2emeSemestre/Blog/index.html");
             die();
         } elseif ($path == '/post/multimedia') {
             createMultimedia();
+        } elseif ($path == '/check/token') { // <-- Ajout du chemin pour vérifier le token
+            checkToken();
         } else {
             http_response_code(HTTP_STATUS_NOT_FOUND);
             echo "Not Found";
         }
         break;
+
+
+    // case 'PUT':
+    //     if ($path == '/posts') {
+    //         updatePost();
+    //     } else {
+    //         http_response_code(HTTP_STATUS_NOT_FOUND);
+    //         echo "Not Found";
+    //     }
+    //     break;
+
+    // case 'DELETE':
+    //     if ($path == '/posts') {
+    //         deletePost();
+    //     } elseif ($path == '/multimedia') {
+    //         deleteMultimedia();
+    //     } else {
+    //         http_response_code(HTTP_STATUS_NOT_FOUND);
+    //         echo "Not Found";
+    //     }
+    //     break;
 
     case 'PUT':
         if ($path == '/posts') {
@@ -46,7 +80,7 @@ switch ($method) {
             echo "Not Found";
         }
         break;
-
+    
     case 'DELETE':
         if ($path == '/posts') {
             deletePost();
@@ -57,7 +91,7 @@ switch ($method) {
             echo "Not Found";
         }
         break;
-
+    
     default:
         http_response_code(HTTP_STATUS_IM_A_TEAPOT);
         break;

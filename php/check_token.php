@@ -18,12 +18,6 @@ $stmt = dbRun($sql, $param);
 $user = $stmt->fetch();
 
 if ($user) {
-    // Vérifier si le token est expiré
-    if ($user['token_expiration'] < time()) {
-        echo json_encode(["error" => "Token expiré. Veuillez vous reconnecter."]);
-        exit();
-    }
-
     echo json_encode(["success" => true, "message" => "Accès autorisé", "user" => $user['name']]);
 } else {
     echo json_encode(["error" => "Token invalide."]);
